@@ -1,0 +1,11 @@
+@charset "utf-8";
+
+
+#canvas {
+  background: black;
+  border: solid 5px white;
+  position: absolute;
+  top: calc(50% - 245px);
+  left: calc(50% - 185px);
+  outline: none;
+}

@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ezen.exit.Service">
+    <insert id="createPostTable">
+        CREATE TABLE POST(
+            NUM NUMBER(8) NOT NULL,
+            TITLE VARCHAR2(100),
+            CONTENT VARCHAR2(2000),
+            HITS NUMBER(8) DEFAULT 0,
+            WRITEDATE DATE DEFAULT SYSDATE,
+            RECOMMEND NUMBER(8) DEFAULT 0,
+            DECOMMEND NUMBER(8) DEFAULT 0,
+            WRITER VARCHAR2(100),
+            CONSTRAINT POST_PK PRIMARY KEY (num)
+        )
+    </insert>
+    <insert id="createPostTagTable">
+        CREATE TABLE POST_TAG(
+            POST_ID NUMBER(8) NOT NULL,
+            TAG_ID NUMBER(8) NOT NULL,
+            CONSTRAINT POST_FK
+                FOREIGN KEY (POST_ID)
+                REFERENCES POST(NUM)
+                ON DELETE CASCADE,
+            CONSTRAINT TAG_FK
+                FOREIGN KEY (TAG_ID)
+                REFERENCES TAG(TAG_ID)
+                ON DELETE CASCADE
+        )
+    </insert>
+    <insert id="createTagTable">
+        CREATE TABLE TAG(
+            TAG_ID NUMBER(8) NOT NULL,
+            TAG_NAME VARCHAR2(100) NOT NULL,
+            CONSTRAINT TAG_PK PRIMARY KEY (TAG_ID)
+        )
+    </insert>
+    <insert id="dropTable" parameterType="java.lang.String">
+        BEGIN
+            EXECUTE IMMEDIATE 'DROP TABLE ${value}';
+        EXCEPTION
+            WHEN OTHERS THEN
+                IF SQLCODE != -942 AND SQLCODE != -903 THEN
+                    RAISE;
+                END IF;
+        END;
+    </insert>
+    <update id="createSeq" parameterType="java.lang.String">
+        CREATE SEQUENCE ${value}
+    </update>
+    <update id="dropSeq" parameterType="java.lang.String">
+        BEGIN
+            EXECUTE IMMEDIATE 'DROP SEQUENCE ${value}';
+        EXCEPTION
+            WHEN OTHERS THEN
+                IF SQLCODE != -2289 THEN
+                    RAISE;
+                END IF;
+        END;
+    </update>
+    <update id="deletePostTagFK" parameterType="java.lang.String">
+        BEGIN
+            EXECUTE IMMEDIATE 'ALTER TABLE POST_TAG DROP CONSTRAINT ${value}';
+        EXCEPTION
+            WHEN OTHERS THEN
+                IF SQLCODE != -942 AND SQLCODE != -6512 AND SQLCODE != -2443 THEN
+                    RAISE;
+                END IF;
+        END;
+    </update>
+    <update id="deleteReplyFK" parameterType="java.lang.String">
+        BEGIN
+            EXECUTE IMMEDIATE 'ALTER TABLE REPLY DROP CONSTRAINT ${value}';
+        EXCEPTION
+            WHEN OTHERS THEN
+                IF SQLCODE != -942 AND SQLCODE != -6512 AND SQLCODE != -2443 THEN
+                    RAISE;
+                END IF;
+        END;
+    </update>
+
+    <insert id="insertPost" parameterType="com.ezen.exit.domain.Post">
+        INSERT INTO POST(NUM, TITLE, CONTENT, WRITER) VALUES(
+            POST_SEQ.NEXTVAL,
+            #{title},
+            #{content},
+            #{writer}
+        )
+        <selectKey keyProperty="num" resultType="Integer" order="AFTER">
+            SELECT POST_SEQ.CURRVAL FROM DUAL
+        </selectKey>
+    </insert>
+    <select id="selectPost" resultType="com.ezen.exit.domain.Post">
+        SELECT * FROM POST WHERE NUM=#{param1}
+    </select>
+    <select id="selectAll" parameterType="java.lang.String" resultType="com.ezen.exit.domain.Post">
+        SELECT * FROM ${value} ORDER BY NUM DESC
+
+    </select>
+    <delete id="deleteAll" parameterType="java.lang.String">
+        DELETE FROM ${value}
+    </delete>
+    <select id="getCount" resultType="int">
+        SELECT COUNT(*) FROM POST
+    </select>
+
+
+    <select id="getPage" resultType="com.ezen.exit.domain.Post">
+        SELECT * FROM(
+            SELECT ROWNUM AS RN,
+            A.* FROM(
+                SELECT *
+                FROM POST ORDER BY NUM DESC
+            ) A
+        )
+        WHERE RN BETWEEN #{param1} AND #{param2}
+    </select>
+    <select id="getHotPost" resultType="com.ezen.exit.domain.Post">
+        SELECT * FROM(
+            SELECT ROWNUM AS RN,
+            A.* FROM(
+                SELECT *
+                FROM POST ORDER BY NUM DESC
+            ) A
+        )
+        WHERE RN BETWEEN 1 AND 10
+    </select>
+    <update id="updatePost" parameterType="com.ezen.exit.domain.Post">
+        UPDATE POST SET
+            TITLE=#{title},
+            CONTENT=#{content}
+        WHERE NUM=#{num}
+    </update>
+    <delete id="deletePost" parameterType="int">
+        DELETE FROM POST WHERE NUM=#{param1}
+    </delete>
+    <update id="addHit" parameterType="int">
+        UPDATE POST SET HITS=HITS+1 WHERE NUM=#{num}
+    </update>
+    <select id="getMonthlyBest" resultType="com.ezen.exit.domain.Post">
+        SELECT * FROM(
+            SELECT ROWNUM AS RN, A.* FROM(
+                SELECT * FROM POST
+                    WHERE WRITEDATE BETWEEN ADD_MONTHS(SYSDATE, -1) AND SYSDATE
+                    ORDER BY RECOMMEND DESC
+            ) A
+        ) WHERE RN BETWEEN 1 AND 5
+    </select>
+    <select id="getWeeklyBest" resultType="com.ezen.exit.domain.Post">
+        SELECT * FROM(
+            SELECT ROWNUM AS RN, A.* FROM(
+                SELECT * FROM POST
+                    WHERE WRITEDATE BETWEEN SYSDATE-7 AND SYSDATE
+                    ORDER BY RECOMMEND DESC
+            ) A
+        ) WHERE RN BETWEEN 1 AND 5
+    </select>
+    <select id="getDailyBest" resultType="com.ezen.exit.domain.Post">
+        SELECT * FROM(
+            SELECT ROWNUM AS RN, A.* FROM(
+                SELECT * FROM POST
+                    WHERE WRITEDATE BETWEEN SYSDATE-1 AND SYSDATE
+                    ORDER BY RECOMMEND DESC
+            ) A
+        ) WHERE RN BETWEEN 1 AND 5
+    </select>
+    <select id="getTagById" parameterType="int" resultType="com.ezen.exit.domain.Tag">
+        SELECT * FROM TAG WHERE TAG_ID=#{PARAM1}
+    </select>
+    <select id="getTagByName" resultType="com.ezen.exit.domain.Tag">
+        SELECT * FROM TAG WHERE TAG_NAME=#{param1}
+    </select>
+    <select id="getTaggedPost" parameterType="int" resultType="com.ezen.exit.domain.Post">
+        SELECT * FROM
+            POST JOIN POST_TAG ON POST.NUM = POST_TAG.POST_ID
+            WHERE POST_TAG.TAG_ID = #{PARAM1}
+    </select>
+    <select id="getPostTags" parameterType="int" resultType="java.lang.String">
+        SELECT T.TAG_NAME FROM POST P
+            JOIN POST_TAG PT ON P.NUM=PT.POST_ID
+            JOIN TAG T ON PT.TAG_ID=T.TAG_ID
+            WHERE P.NUM=#{PARAM1}
+    </select>
+
+    <insert id="insertTag" parameterType="java.lang.String">
+        INSERT INTO TAG VALUES(TAG_SEQ.NEXTVAL, #{value})
+    </insert>
+
+    <insert id="insertPostTag">
+        INSERT INTO POST_TAG VALUES(
+            #{param1},
+            #{param2}
+        )
+    </insert>
+    <delete id="deletePostTag">
+        DELETE FROM POST_TAG WHERE POST_ID=#{param1}
+    </delete>
+
+    <insert id="createReplyTable">
+        CREATE TABLE Reply(
+            POSTID NUMBER(8) NOT NULL,
+            REPLYID NUMBER(8) NOT NULL,
+            WRITER VARCHAR2(100),
+            CONTENT VARCHAR2(2000),
+            ROOT NUMBER(8),
+            ORD NUMBER(8),
+            INDENT NUMBER(8),
+            CONSTRAINT REPLY_FK
+                FOREIGN KEY (POSTID)
+                REFERENCES POST(NUM)
+                ON DELETE CASCADE
+        )
+    </insert>
+    <select id="getReplyCount" resultType="int">
+        SELECT COUNT(*) FROM REPLY
+    </select>
+    <insert id="insertReply" parameterType="com.ezen.exit.domain.Reply">
+        INSERT INTO REPLY(POSTID, REPLYID, WRITER, CONTENT) VALUES(
+            #{postId},
+            REPLY_SEQ.NEXTVAL,
+            #{writer},
+            #{content}
+        )
+        <selectKey keyProperty="replyId" resultType="Integer" order="AFTER">
+            SELECT REPLY_SEQ.CURRVAL FROM DUAL
+        </selectKey>
+    </insert>
+    <update id="pushReply">
+        UPDATE REPLY SET ORD=ORD+1 WHERE ROOT=#{param1} AND ORD>=#{param2}
+    </update>
+    <select id="getReplyByReplyId" resultType="com.ezen.exit.domain.Reply">
+        SELECT * FROM REPLY WHERE REPLYID=#{param1}
+    </select>
+    <select id="getRepliesByPostId" resultType="com.ezen.exit.domain.Reply">
+        SELECT * FROM REPLY WHERE POSTID=#{param1} ORDER BY ROOT, ORD
+    </select>
+
+
+</mapper>

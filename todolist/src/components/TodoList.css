@@ -1,0 +1,25 @@
+.TodoList {
+    width: 90vw;
+    margin-right: auto;
+    margin-left: auto;
+    padding-bottom: 20px;
+}
+
+
+@media screen and (max-width: 390px) {
+    .TodoList {
+        width: 90vw;
+        margin-right: auto;
+        margin-left: auto;
+        padding-bottom: 20px;
+    }
+}
+@media screen and (min-width: 390px) {
+    .TodoList {
+        width: 300px;
+        margin-right: auto;
+        margin-left: auto;
+        padding-bottom: 20px;
+    }
+
+}

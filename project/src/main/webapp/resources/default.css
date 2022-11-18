@@ -1,0 +1,9 @@
+@charset "UTF-8";
+@font-face {
+    font-family: neo;
+    src: url('neodgm.ttf');
+}
+
+*{
+    font-family: 'neo';
+}

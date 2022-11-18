@@ -1,0 +1,273 @@
+@charset "UTF-8";
+
+@media screen and (max-width: 1500px) {
+	.hit-tag-box {
+		display: none;
+	}
+}
+
+.head-wrapper{
+padding-top: 5px;
+	}
+.post-box {
+	width: 768px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 50px;
+}
+.sub_mit{
+	float: right;
+}
+.post-box h1 {
+	font-size: 3rem;
+	line-height: 1.5;
+	letter-spacing: -0.004em;
+	font-weight: 800;
+	color: var(- -text1);
+	margin-bottom: 2rem;
+	word-break: keep-all;
+	transition: color 0.125s ease-in 0s;
+	margin-top: 50px;
+}
+
+.post-user {
+	-webkit-box-align: center;
+	align-items: center;
+	font-size: 1rem;
+	color: var(- -text2);
+	display: flex;
+	-webkit-box-pack: justify;
+	justify-content: space-between;
+}
+
+.post-user .information .username {
+	color: var(- -text1);
+	font-weight: bold;
+}
+
+.post-user .information .seperator {
+	margin-left: 0.5rem;
+	margin-right: 0.5rem;
+}
+
+.post-tag {
+	margin-top: 0.875rem;
+	margin-bottom: -0.875rem;
+	min-height: 0.875rem;
+}
+
+.usertag {
+	margin-bottom: 0.875rem;
+	background: #f8f9fa;
+	padding-left: 1rem;
+	padding-right: 1rem;
+	height: 2rem;
+	border-radius: 1rem;
+	display: inline-flex;
+	-webkit-box-align: center;
+	align-items: center;
+	margin-right: 0.875rem;
+	color: #000000;
+	text-decoration: none;
+	font-weight: 500;
+	font-size: 1rem;
+}
+
+.post-link {
+	position: relative;
+	margin-top: 2rem;
+}
+
+.linkbox {
+	position: absolute;
+	left: -7rem;
+}
+
+.userLink {
+	border-radius: 2rem;
+	padding: 0.5rem;
+	display: flex;
+	flex-direction: column;
+	-webkit-box-align: center;
+	align-items: center;
+}
+
+.mylink {
+	height: 3rem;
+	width: 3rem;
+	display: flex;
+	-webkit-box-align: center;
+	align-items: center;
+	-webkit-box-pack: center;
+	justify-content: center;
+	border: 1px solid #dee2e6;
+	border-radius: 1.5rem;
+	cursor: pointer;
+	z-index: 5;
+}
+
+.hitbox {
+	position: relative;
+	margin-top: 2rem;
+}
+
+.hitbox-point {
+	position: absolute;
+	right: 100%;
+}
+
+.hit-tag-box {
+	position: fixed;
+	left: 130px;
+	color: #868e96;
+	line-height: 1.5;
+	font-size: 0.875rem;
+	max-height: calc(100vh - 128px);
+	overflow: hidden auto;
+	background-color: white;
+}
+
+.hit-tag {
+	margin-left: 0px;
+	display: block;
+	transition: all 0.125s ease-in 0s;
+	padding-bottom: 3px;
+}
+
+.hit-deco-head {
+	background-color: rgb(0, 0, 0);
+	border: 1px solid rgb(32, 204, 210);
+	border-bottom: #072c4d 1px solid;
+	width: 220px;
+	color: white;
+	padding: 2px;
+	overflow: hidden;
+}
+
+
+.hit-deco-contain a {
+	text-decoration: none;
+	color: black;
+	font-weight: 600;
+	margin: 3px;
+	padding: 3px;
+}
+
+.close {
+	cursor: pointer;
+}
+
+.hit-deco-contain {
+	border: 1px solid rgb(0, 21, 79);
+	width: 200px;
+	overflow: hidden;
+}
+
+/* 내용부분 */
+.post-content-wrap {
+	width: 768px;
+	margin: 5rem auto 0px;
+}
+
+.post-content {
+	font-size: 1.125rem;
+	color: black;
+	transition: color 0.125s ease-in 0s;
+	line-height: 1.7;
+	letter-spacing: -0.004em;
+	word-break: keep-all;
+	overflow-wrap: break-word;
+	padding: 0px 10px;
+	border-left: 1px solid rgba(185, 185, 185, 0.163);
+}
+
+.post-container {
+	box-shadow: 0 -3px 10px -5px;
+	width: 900px;
+	margin: 0 auto;
+	border-radius: 20px;
+	height: 700px;
+	margin-bottom: 500px;
+}
+
+* {
+	box-sizing: border-box;
+}
+/* 전체 박스설정 */
+.container_reply {
+	box-shadow: 0 -3px 10px -5px;
+	width: 900px;
+	margin: 500 auto 0;
+	border-radius: 20px;
+	height: 210px;
+	margin-top: 420px;
+}
+/* replyinfo 설정 */
+.replyinfo {
+	border-top-left-radius: 10px;
+	border-top-right-radius: 10px;
+	margin: auto;
+	height: 50px;
+	background-color: rgb(255, 255, 255);
+	margin-bottom: 5px;
+}
+
+.replyname {
+	margin-left: 50px;
+	font-size: 16px;
+	line-height: 40px;
+}
+
+.replytime {
+	float: left;
+	margin-left: 60px;
+	font-size: 10px;
+	margin-top: -15px;
+}
+
+.replysubmit {
+	text-align: right;
+	margin-top: 5px;
+	padding-right: 30px;
+	float: right;
+	margin-top: -20px;
+}
+
+.replysubmit button {
+	border: 0px;
+	background-color: rgb(236, 240, 255);
+	border-radius: 10px;
+	padding: 5px;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+/* textarea설정 */
+.replyarea {
+	width: 900px;
+	margin: auto;
+}
+
+.replyinfo {
+	width: 900px;
+}
+
+.replyarea .replysub {
+	float: right;
+	border: 0px;
+	background-color: white;
+}
+
+.reply{
+	box-shadow: 0 -3px 10px -5px;
+	width: 900px;
+	margin:0 auto 0;
+	border-radius: 20px;
+	height: 210px;
+	margin-top: 120px;
+}
+
+.rep1{
+border: 1px solid black;	
+width: 900px;
+height: 100px;
+}
