@@ -21,7 +21,7 @@ const Ref=()=>{
         <p>State: {count}</p>
         <p>Ref : {countRef.current}</p>
         <button onClick={increaseCountState}>State 올려!</button>
-        <button onClick={increaseCountRef}>State 올려!</button>
+        <button onClick={increaseCountRef}>Ref올려!</button>
     </div>
 }
 export default Ref;
