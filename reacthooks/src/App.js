@@ -8,6 +8,10 @@ import Ref from "./component/useRef/ref"
 import Ref1 from "./component/useRef/Ref1"
 import Ref2 from "./component/useRef/Ref2";
 import Context from "./component/useContext/context";
+import Usememo1 from "./component/useMemo/usememo1";
+import Usememo2 from "./component/useMemo/usememo2";
+import Usecallback1 from "./component/useCallback/usecallback1";
+import Usecallback2 from "./component/useCallback/usecallback2";
 
 function App() {
 
@@ -27,8 +31,20 @@ function App() {
         <hr/>
         <Ref2></Ref2>
         <hr/>
+        <h1>useContext</h1>
         <Context/>
+        <hr/>
+        <h1>useMemo</h1>
+        <Usememo1></Usememo1>
+        <Usememo2></Usememo2>
+        <hr/>
+        <br/>
+        <br/><br/><br/>
 
+
+        <h1>useCallback</h1>
+        <Usecallback1></Usecallback1>
+        <Usecallback2></Usecallback2>
     </div>);
 }
 
