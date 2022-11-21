@@ -1,20 +1,28 @@
 import React, {useEffect, useRef, useState} from 'react';
 
 
-const Ref_1 = () => {
-    const [renderer, setRenderer] =useState(0);
+const Ref1 = () => {
+    const [count, setCount] = useState(1);
     const countRef = useRef(0);
     let countVar = 0;
 
     //렌더링 수를 알아보자
-    const [count, setCount] = useState(1);
-    const renderCount = useRef(1);
+    const [renderer, setRenderer] =useState(0);
+    const renderCount = useRef(0);
 
     //렌더링 하는 함수!
     const doRendering =()=>{
         setRenderer(renderer+1);
     }
+
+    useEffect(()=>{
+        renderCount.current = renderCount.current+1;
+        console.log('렌더링 수 : ', renderCount.current)
+    })
+
     //클릭시 ref의 값을 1씩 증가 심키는 함수
+
+
     const increaseRef = ()=>{
         countRef.current = countRef.current+1;
     }
@@ -23,10 +31,7 @@ const Ref_1 = () => {
         countVar = countVar+1;
     }
 
-    useEffect(()=>{
-        renderCount.current = renderCount.current+1;
-        console.log('렌더링 수 : ',renderCount.current)
-    })
+
 
     return <div>
         <p>Ref : {countRef.current}</p>
@@ -42,4 +47,4 @@ const Ref_1 = () => {
     </div>
 }
 
-export default Ref_1;
+export default Ref1;
