@@ -16,3 +16,7 @@
     z-index: 1;
     margin : 0 5px;
 }
+.header_login{
+    text-decoration: none;
+    color: white;
+}
