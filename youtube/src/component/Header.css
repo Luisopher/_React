@@ -1,0 +1,50 @@
+*{
+    box-sizing: border-box;
+    margin: 0;
+}
+
+.header{
+    display: flex;
+    height: 56px;
+    background-color: black;
+}
+.left{
+    flex: 0.3;
+    justify-content:flex-start;
+    align-items:center;
+    margin-top: 15px;
+}
+.left_logo{
+    background-image: url("/public/YouTube_logo_01.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 120px;
+    height: 70px;
+    display: flex;
+    margin-left: 30px;
+}
+.main{
+    flex: 1;
+    text-align: center;
+    line-height: 56px;
+}
+.main input{
+    width: 80%;
+    height: 38px;
+    border-radius: 20px;
+}
+.right{
+    flex: 0.3;
+    line-height: 56px;
+}
+
+.right_list{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+.right_list li{
+    list-style: none;
+    color: white;
+    margin: 0 5px 0 20px;
+}
